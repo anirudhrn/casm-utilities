@@ -7,12 +7,6 @@
 #include "casmutils/lattice.hpp"
 #include <casm/crystallography/Niggli.hh>
 
-namespace Simplicity
+namespace SpecializedEnumeration
 {
-    void trivial_muna_function()
-    {
-        std::cout<<"Nice haircut"<<std::endl;
-        return;
-    }
-
-} // namespace SuperBoxy
+}
