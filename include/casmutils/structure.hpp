@@ -44,6 +44,8 @@ public:
     ///Returns true if the distance between the coordinates is within CASM::TOL
     bool operator==(const Coordinate &coord_to_compare);
 
+    const CASM::Coordinate& __get() const {return casm_coord;};
+
 private:
     /// Use the CASM implementation to forward any functionality you want
     CASM::Coordinate casm_coord;

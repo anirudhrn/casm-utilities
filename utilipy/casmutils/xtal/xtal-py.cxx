@@ -125,6 +125,8 @@ PYBIND11_MODULE(_xtal, m)
             .def("is_primitive", &Rewrap::Structure::is_primitive)
             .def("make_niggli", (Rewrap::Structure(*)(const Rewrap::Structure&))Simplicity::make_niggli)
             .def("set_lattice", set_lattice)
+            .def("lattice", &Rewrap::Structure::lattice)
+            .def("basis_sites", &Rewrap::Structure::basis_sites)
             .def_static("from_poscar", from_poscar)
             .def("to_poscar", to_poscar);
     }
