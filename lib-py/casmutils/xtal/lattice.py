@@ -49,6 +49,7 @@ class Lattice(_xtal.Lattice):
         """
         super().__init__(a,b,c)
 
+    #TODO: Would binding a copy constructor work instead?
     @classmethod
     def _from_pybind(cls, pybind_value):
         """Returns a constructed Lattice from
@@ -183,5 +184,5 @@ class Lattice(_xtal.Lattice):
         string
 
         """
-        return self.__str__()
+        return super().__str__()
 

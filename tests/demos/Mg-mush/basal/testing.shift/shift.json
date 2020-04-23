@@ -1,0 +1,6 @@
+{
+  "a" : 10,
+  "b" : 10,
+  "cleavage" : [ 0.000000000000 ],
+  "slab" : "./testing.base/final_slab.vasp"
+}
