@@ -67,7 +67,7 @@ def main():
     color_map={m:c for m,c in zip(unique_map_str,colors)}
     plot_color_vals=[color_map[s] for s in maps_str]
 
-    fig=plt.figure()
+    fig=plt.figure(1)
     ax=fig.add_subplot('111')
     ax.set_aspect('equal')
 
@@ -77,6 +77,12 @@ def main():
             x=shift_coords[:,0]+periodic_shift[0]
             y=shift_coords[:,1]+periodic_shift[1]
             ax.scatter(x,y,c=plot_color_vals)
+
+    fig=plt.figure(2)
+    ax=fig.add_subplot('111')
+    ax.set_aspect('equal')
+    ax.scatter(shift_coords[:,0],shift_coords[:,1],c=plot_color_vals)
+
     plt.show()
 
 
