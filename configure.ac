@@ -32,8 +32,10 @@ AC_SEARCH_LIBS(dlopen, dl, [], AC_MSG_ERROR(dl library not found!))
 # Why is this such a pain in the butt? I just want to -lstdc++fs, I could be doing this in the
 # Makefile, but instead I'm following this example:
 # https://github.com/LibreOffice/online/blob/master/configure.ac
-AC_MSG_CHECKING(for std::filesystem features in -lstdc++fs)
+AC_MSG_CHECKING(for std::filesystem features in -lstdc++fs\n)
 STD_FILESYSTEM=
+STD_XCODE_FILESYSTEM=
+
     save_CXXFLAGS=$CXXFLAGS
     CXXFLAGS="$CXXFLAGS -Werror"
     save_LIBS=$LIBS
@@ -47,12 +49,12 @@ STD_FILESYSTEM=
                     return 0;
                 return 1;
             }
-            ]])],[STD_FILESYSTEM=TRUE], AC_MSG_ERROR(stdc++fs not found!))
+            ]])],[STD_FILESYSTEM=TRUE])
     AC_LANG_POP([C++])
     CXXFLAGS=$save_CXXFLAGS
     LIBS=$save_LIBS
 
-STD_XCODE_FILESYSTEM=
+AC_MSG_CHECKING(for std::filesystem features without -lstdc++fs\n)
     save_CXXFLAGS=$CXXFLAGS
     CXXFLAGS="$CXXFLAGS -Werror"
     save_LIBS=$LIBS
@@ -66,7 +68,7 @@ STD_XCODE_FILESYSTEM=
                     return 0;
                 return 1;
             }
-            ]])],[STD_XCODE_FILESYSTEM=TRUE], AC_MSG_ERROR(Could not find std::filesystem))
+            ]])],[STD_XCODE_FILESYSTEM=TRUE])
     AC_LANG_POP([C++])
     CXXFLAGS=$save_CXXFLAGS
     LIBS=$save_LIBS
@@ -74,7 +76,7 @@ STD_XCODE_FILESYSTEM=
 if test -n "$STD_FILESYSTEM" ; then 
     LIBS="$LIBS -lstdc++fs"
     AC_MSG_RESULT(yes)
-else if test -n "$STD_XCODE_FILESYSTEM" ; then 
+elif test -n "$STD_XCODE_FILESYSTEM" ; then 
     AC_MSG_RESULT(yes)
 else
     AC_MSG_ERROR(Could not detect std::filesystem!)
