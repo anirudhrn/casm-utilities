@@ -52,11 +52,32 @@ STD_FILESYSTEM=
     CXXFLAGS=$save_CXXFLAGS
     LIBS=$save_LIBS
 
-if test -n "$STD_FILESYSTEM" ; then
+STD_XCODE_FILESYSTEM=
+    save_CXXFLAGS=$CXXFLAGS
+    CXXFLAGS="$CXXFLAGS -Werror"
+    save_LIBS=$LIBS
+    LIBS="$save_LIBS"
+    AC_LANG_PUSH([C++])
+    AC_LINK_IFELSE([AC_LANG_SOURCE([[
+            #include <filesystem>
+            int main()
+            {
+                if (!std::filesystem::temp_directory_path().empty())
+                    return 0;
+                return 1;
+            }
+            ]])],[STD_XCODE_FILESYSTEM=TRUE], AC_MSG_ERROR(Could not find std::filesystem))
+    AC_LANG_POP([C++])
+    CXXFLAGS=$save_CXXFLAGS
+    LIBS=$save_LIBS
+
+if test -n "$STD_FILESYSTEM" ; then 
     LIBS="$LIBS -lstdc++fs"
     AC_MSG_RESULT(yes)
+else if test -n "$STD_XCODE_FILESYSTEM" ; then 
+    AC_MSG_RESULT(yes)
 else
-    AC_MSG_ERROR("libstdc++fs library not found!)
+    AC_MSG_ERROR(Could not detect std::filesystem!)
 fi
 
 AC_CONFIG_FILES([Makefile])
