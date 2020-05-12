@@ -8,6 +8,30 @@
 
 namespace CASM {
   namespace VaspIO {
+      
+// compute the largest width
+template<typename Derived, typename Index = typename Derived::Index>
+Index print_matrix_width(std::ostream & s, const Derived& m, Index width) {
+  for(Index j = 0; j < m.cols(); ++j) {
+    for(Index i = 0; i < m.rows(); ++i)
+    {
+      std::stringstream sstr;
+      sstr.copyfmt(s);
+      sstr << m.coeff(i,j);
+      width = std::max<Index>(width, Index(sstr.str().length()));
+    }
+  }
+  return width;
+}
+
+// compute the largest width
+template<typename DerivedIterator, typename Index = typename std::iterator_traits<DerivedIterator>::value_type::Index>
+Index print_matrix_width(std::ostream & s, DerivedIterator begin, DerivedIterator end, Index width) {
+  for(; begin != end; ++begin) {
+    width = print_matrix_width(s, *begin, width);
+  }
+  return width;
+}
 
     // --- Definitions -------------------------------------------------------- //
 
