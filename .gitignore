@@ -58,3 +58,6 @@ lib/casmutils/rules.cxx
 *.bak
 *.bak.*
 bak
+
+#compiled doc
+doc/_build
