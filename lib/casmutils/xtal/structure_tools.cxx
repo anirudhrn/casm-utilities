@@ -148,8 +148,15 @@ std::vector<Structure> make_superstructures_of_volume(const Structure& structure
 
     for (const auto& lat : lat_enumerator)
     {
-        Eigen::Matrix3i transfmat =
-            (structure.lattice().column_vector_matrix().inverse() * lat.lat_column_mat()).cast<int>();
+        Eigen::Matrix3d transfmat_double = (structure.lattice().column_vector_matrix().inverse() * lat.lat_column_mat());
+        // Eigen::Matrix3i transfmat =
+        //     (structure.lattice().column_vector_matrix().inverse() * lat.lat_column_mat()).cast<int>();
+        Eigen::Matrix3i transfmat;
+        for(int i=0;i<transfmat_double.rows();i++){
+            for(int j=0;j<transfmat_double.cols();j++){
+                transfmat(i,j) = std::round(transfmat_double(i,j));
+            }
+        }
         Structure super = CASM::xtal::make_superstructure(structure.__get<CASM::xtal::BasicStructure>(), transfmat);
         make_niggli(&super);
 
